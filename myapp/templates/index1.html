@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>hello app</title>
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    width:50px;
+    text-align: center;
+
+    font-size: 16px;
+	height:35px;
+}
+.button1 {
+    background-color: #0000FF;
+    border: none;
+    color: white;
+    width:60px;
+    text-align: center;
+	text-decoration:none
+    font-size: 16px;
+	height:35px;
+}
+
+</style>
+
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">Django blog</a>
+    </div>
+
+	<div style="margin-left:50px">
+    <ul class="nav navbar-nav navbar-left">
+
+<li><a href="">Welcome {{request.user.username}}</a></li>
+
+
+	  </ul>
+	  </div>
+
+  <!--  <form id="searchform" action="" method="get" accept-charset="utf-8">
+          <button class="searchbutton" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+          <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+        </form>-->
+
+	<div style="margin-right:50px">
+    <ul class="nav navbar-nav navbar-right">
+
+
+<li><a href="/logout/">Logout</a></li>
+   <li>
+   <div style="margin-top:5px">
+   {% if request.user.profile.pic %}
+
+<img src="{{request.user.profile.pic.url}}" align="middle" class="img-circle" width="50px" height="50px"/><br><br>
+{% endif %}
+</div>
+   </li>
+
+	  </ul>
+	  </div>
+  </div>
+</nav>
+
+<div style="width:550px;margin-left:30%;">
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Create Post</h3>
+  </div>
+</div>
+{% if form %}
+<form action="" method='post' enctype="multipart/form-data">
+{% csrf_token %}
+{{form.title}}<br><br>
+{{form.content}}<br><br>
+<button type='submit' class='button'>Save</button>
+
+</form>
+</div>
+<br>
+
+
+<div style="width:550px;margin-left:30%;">
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Post</h3>
+  </div>
+</div>
+{% endif %}
+
+{% if data %}
+{% for i in data %}
+<div class="col-sm-12">
+     <div class="thumbnail">
+	   <div class="caption">
+<table>
+<tr style="width:100%">
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+
+    <h3 class="panel-title">Post by {{i.author.username}}</h3>
+  </div>
+</div>
+
+</tr>
+<tr>
+<td>
+{% if i.author.profile.pic %}
+
+<img src="{{i.author.profile.pic.url}}" class="img-circle" width="50px" height="50px"/><br><br>
+{% endif %}
+
+</td>
+
+<td style="padding-left:20px;">
+<h3 style="color:blue"><b>{{i.title}}</b></h3>
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td style="padding-left:20px;">
+{{i.content}}<br><br>
+</td>
+</tr>
+<tr><td>
+{% ifequal i.author request.user %}
+<a href="{% url 'delete' i.id %}" class="btn btn-primary btn-md">Delete</a>
+{% endifequal %}
+</td>
+</tr>
+</table>
+ </div>
+   </div>
+   </div>
+{% endfor %}
+
+{% endif %}
+
+{% if msg %}
+<p>{{msg}}</p>
+{% endif %}
+</div>
+
+</body>
+</html>

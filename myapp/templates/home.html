@@ -1,0 +1,21 @@
+<html>
+<head>
+
+
+</head>
+<body>
+<form action="" method='post' enctype = "multipart/form-data" >
+{% csrf_token %}
+{{regform.as_p}}
+{{profile_form.as_p}}
+<button type="submit">Save</button>
+</form>
+
+<a href=''>Next page</a>
+
+
+
+
+</body>
+
+</html>

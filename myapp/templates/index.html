@@ -1,0 +1,93 @@
+<html>
+<head>
+
+
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+<title>hello app</title>
+<style>
+.button{
+background-color:#4AF50;
+border:none;
+color:white;
+width:50px;
+text-align:center;
+font-size:16px;
+height:35px;
+}
+.button1{
+background-color:#000FF;
+border:none;
+color:white;
+width:60px;
+text-align:center;
+text-decoration:none;
+font-size:16px;
+height:35px;
+
+
+}
+a:link{
+text-decoration:none;
+text-align:center;
+padding:6px 12px;
+background-color:#4CAF50;
+font-size:18px;
+
+
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div style="margin-top:5px;margin-right:10%" align='right'>
+   {% if request.user.profile.pic %}
+
+<img src="{{request.user.profile.pic.url}}" align="middle" class="img-circle" width="50px" height="50px"/><a href="/logout/">Logout</a></p><br><br>
+{% endif %}
+</div>
+<br>
+<h1 align='center'>Hi {{request.user.username}}..!</h1>
+<form id="searchform" action="" method="get" accept-charset="utf-8">
+      <button class="searchbutton" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+    </form>
+
+<div style="width:270px;margin-left:35%;" >
+<h1>Create post</h1>
+<form action='' method='post'>
+{% csrf_token %}
+{{form.title}}<br><br>
+{{form.content}}<br><br>
+<button type='submit' class='button'>Save</button>
+
+
+</form>
+
+</div>
+<br><br>
+<div style="width:270px;margin-left:35%;border-top:5px solid silver">
+{% if data %}
+{% for i in data%}
+<h3>Author:{{i.author.username}}</h3>
+<h3>{{i.title}}</h3>
+{{i.content}}<br><br>
+
+<hr>
+{% endfor %}
+{% endif %}
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
